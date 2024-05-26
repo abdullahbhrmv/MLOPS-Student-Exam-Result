@@ -1,8 +1,11 @@
+import os
 import shap
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 from .utils import load_and_prepare_data
-import os
+
+# Matplotlib'i etkileşimli olmayan moda al
+plt.switch_backend('Agg')
 
 def explain_model():
     try:
@@ -19,8 +22,13 @@ def explain_model():
 
         print("SHAP grafiği oluşturuluyor...")
         shap.summary_plot(shap_values, X_test)
-        shap_plot_path = os.path.join('static', 'shap_summary_plot.png')
+        # SHAP grafiğini statik dosyalar dizinine kaydedin
+        static_dir = os.path.join(os.path.dirname(__file__), '..', 'static')
+        if not os.path.exists(static_dir):
+            os.makedirs(static_dir)
+        shap_plot_path = os.path.join(static_dir, 'shap_summary_plot.png')
         plt.savefig(shap_plot_path)
+        plt.close()
 
         print(f"SHAP grafiği kaydedildi: {shap_plot_path}")
         return shap_plot_path

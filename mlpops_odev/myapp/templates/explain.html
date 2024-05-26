@@ -1,13 +1,18 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explain Model</title>
+    <title>Model Explanation</title>
+    {% load static %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Model Explanation</h1>
-    <img src="{% static 'shap_summary_plot.png' %}" alt="SHAP Summary Plot">
+    <div class="container">
+        <h1 class="my-4">Model Explanation</h1>
+        {% if shap_plot_path %}
+            <img src="{% static shap_plot_path %}" class="img-fluid" alt="SHAP Summary Plot">
+        {% else %}
+            <p class="text-danger">SHAP grafiği oluşturulamadı.</p>
+        {% endif %}
+    </div>
 </body>
 </html>
